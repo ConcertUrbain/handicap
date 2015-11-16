@@ -1,0 +1,40 @@
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<style>
+			.line{
+				padding:15px;
+				border-bottom:solid;
+				border-width:2px;
+			}
+			.line:hover{
+				background-color:#ccc;
+			}
+			.title{
+				font-size:1.2em;
+			}
+			p{
+				margin:0px;
+				padding:0px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="line">
+			<p class="title"># Pour changer l'image d'une question (icone dans le menu en haut)</p>
+			<p>Il faut rajouter une image dans le dossier images/question_icons/</p>
+			<p>images/question_icons/qst-[ID].png</p>
+      <p>Les images sont contraintes à une dimension carrée de 50px 50px.</p>
+		</div>
+		<div class="line">
+			<p class="title"># Checklist pour faire fonctionner une question</p>
+			<p>- Une question doit avoir un titre</p>
+			<p>- Une question doit avoir une description. Cette description sera affichée dans la page de présentation.</p>
+			<p>- Une question doit avoir une vidéo d'illustration (mme jeanvoine) associée. Cette vidéo est marqué par des "" dans son titre.</p>
+		</div>
+    <div class="line">
+			<p class="title"># Changer la vidéo dans la rubrique contexte de la page de présentation</p>
+			<p>- Changer le constante PRESENTATION_VIDEO dans const.php</p>
+		</div>
+	</body>
+</html>

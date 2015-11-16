@@ -1,0 +1,195 @@
+$(function(){
+  initMosaicPopupQuestion();
+  initMosaicPop();
+  //loadMosaic();
+  initItemPop();
+
+  $("#debat").on("mouseover", function(e) {
+	$(".menu-debat-rollover").css("display", "block");
+  });
+  
+  $("#debat").on("mouseout", function(e) {
+	$(".menu-debat-rollover").css("display", "none");
+  });
+  
+  $("#question-icon-cam").hide();
+});
+
+function initMosaicPopupQuestion(){
+  $("#popup-question").hide();
+  
+  var pop = $("#popup-question");
+  var timeoutid;
+
+  $("#question-label").hover(function(e){
+	if (timeoutid) clearTimeout(timeoutid);
+    pop.fadeIn(200);
+  }, function(){
+    timeoutid = setTimeout(function() {pop.fadeOut(200)}, 100);
+  });
+  
+  $("#question-icon").hover(function(e){
+	if (timeoutid) clearTimeout(timeoutid);
+    pop.fadeIn(200);
+  });
+  
+  $("#popup-question").hover(function(e){
+	if (timeoutid) clearTimeout(timeoutid);
+    pop.fadeIn(200);
+  }, function(){
+    timeoutid = setTimeout(function() {pop.fadeOut(200)}, 100);
+  });
+  
+}
+
+function questionHover(){
+	$("#question-link").hover(function(e){
+		e.preventDefault();
+		$this = $(this)
+		
+		$("#question-icon-cam").show();
+	}, function(e){
+		$("#question-icon-cam").hide();
+	});
+}
+
+function openPopup(content, ypos, xpos){
+	if(content.length > 0){
+		$pop = $(".popup-border");
+		$pop.stop();
+		$pop.hide();
+		$pop.fadeIn(100);
+		$pop.css({ "top": ypos, "left": xpos });
+		$(".popup").html(content);
+	}
+}
+
+function closePopup(){
+	$pop = $(".popup-border");
+	$pop.fadeOut(100);
+}
+
+function loadMosaic(){
+	callLoadingLayer();
+	
+	$.post("ajaxMosaicItems.php", function(data){
+		
+		//[EVENT]DONE LOADING ...
+		
+		$("#items-frame").html(data);
+		$(".item").hide();
+		$(".item").fadeIn(200);
+		
+		//hover items
+		initItemPop();
+		
+		hideLoadingLayer();
+	});
+	
+}
+
+function initItemPop(){
+	$(".item").hover(function(e){
+		//e.preventDefault();
+		var $this = $(this);
+		var content = '<span class="icon-media ' + $this.attr("rel") + '"></span> ' + $this.attr('alt');
+		var position = $this.offset();
+		openPopup(content, position.top, position.left + 50);
+	},function(e){
+		closePopup();
+	});
+
+	var afficherPage = function(pageNo) {
+		
+		var classePage = "page" + pageNo;
+		var classeNoPage = "no" + classePage;
+		
+		// Mémorisation du no de page courante	
+		var legendeEl = $("#items_navigation_precedent_suite #legende");
+		var classePageCourante = legendeEl.prop('className');
+		legendeEl.removeClass(classePageCourante).addClass(classePage);	
+
+		
+		//
+		// Items
+		//
+		
+		var items = $(".item");
+		
+		// On masque tous les items par défaut
+		items.not('item_hidden').addClass("item_hidden");
+		
+		// On affiche ceux de la page suivante
+		$("." + classePage).removeClass("item_hidden");
+		
+					
+		//
+		// No de page
+		//
+		
+		// On enlève l'effet actif de tous les nos de pages
+		$(".nopage").removeClass("nopage_actif");
+		
+		// On l'ajoute sur le bon no de page
+		$("#" + classeNoPage).addClass("nopage_actif");
+	}
+	
+	var afficherPagePrecedente = function() {
+		
+		// On a attribué à la légende un classe CSS contenant le no de la page : "page0", "page1", ...
+		// On y a également associé un data-id avec comme valeur le numéro de page de la dernière page
+		var legendeEl = $("#items_navigation_precedent_suite #legende");
+		
+		var classePageCourante = legendeEl.prop('className');
+		var pageNo = parseInt(classePageCourante.split("page").join(""));
+	
+		if (pageNo > 0)
+		{
+			afficherPage(pageNo - 1);
+		}
+	}
+	
+	var afficherPageSuivante = function() {
+		
+		// On a attribué à la légende un classe CSS contenant le no de la page : "page0", "page1", ...
+		// On y a également associé un data-id avec comme valeur le numéro de page de la dernière page
+		var legendeEl = $("#items_navigation_precedent_suite #legende");
+		
+		var classePageCourante = legendeEl.prop('className');
+		var pageNo = parseInt(classePageCourante.split("page").join(""));
+	
+		// No de page maximal
+		var pageMax = parseInt(legendeEl.attr("data-id"));
+		
+		// alert(pageNo + "/" + pageMax);
+		
+		if (pageNo < pageMax - 1)
+		{
+			afficherPage(pageNo + 1);
+		}
+	}
+
+	var afficherPageNo = function(e) {
+		
+		var pageId = $(e.target).parent().attr('id');
+		var pageNo = parseInt(pageId.split("nopage").join(""));
+		
+		afficherPage(pageNo);
+	}
+	
+	$("#items_navigation_precedent_suite #pagePrecedente a").on("mousedown", afficherPagePrecedente);
+    $("#items_navigation_precedent_suite #pageSuivante a").on("mousedown", afficherPageSuivante);
+    $("#items_navigation_precedent_suite .nopage a").on("mousedown", afficherPageNo);
+}
+
+function initMosaicPop(){
+	$(".popup-border").hide();
+	$("#popup-info").hide();
+	/*
+	$("#plus-add").hover(function(e){
+		$("#popup-info").fadeIn(100);
+	}, function(e){
+		$("#popup-info").fadeOut(100);
+	});
+	*/
+}

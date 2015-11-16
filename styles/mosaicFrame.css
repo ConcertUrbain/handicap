@@ -1,0 +1,123 @@
+
+#items-frame-border{
+	-moz-border-radius: 50px;
+	border-radius: 50px;
+	background-color:#fff;
+	padding:5px;
+	
+	z-index:1;
+}
+
+#items-positive{
+	background-color:#4fa600;
+	
+	-moz-border-radius: 50px 50px 0px 0px;
+	border-radius: 50px 50px 0px 0px;
+	
+	height:265px;
+	padding-left:25px;
+	padding-right:20px;
+}
+
+#items-negative{
+	background-color:#d50000;
+	
+	-moz-border-radius: 0px 0px 50px 50px;
+	border-radius: 0px 0px 50px 50px;
+	
+	height:265px;
+	padding-left:25px;
+	padding-right:20px;
+}
+
+#items_navigation_pagination {
+	width:100%;
+	text-align:center;
+	margin:0px auto;
+	float:left;
+}
+
+#items_navigation_pagination .nopage {
+	font-size:32px;
+	line-height:24px;
+	color: #000000;
+}
+
+#items_navigation_precedent_suite #legende, #items_navigation_precedent_suite #nopages {
+	height: 30px;
+	display: inline-block;
+	vertical-align: top;
+	padding-top: 10px;
+}
+
+#items_navigation_precedent_suite #nopages .nopage_actif a {
+	/*color:#ffffff;*/
+	font-weight: bold;
+	border:7px solid #c93083;
+	border-radius: 4px;
+	padding: 0 25px;
+}
+
+#items_navigation_precedent_suite #nopages {
+    background-color: #ffffff;
+}
+#items_navigation_precedent_suite #nopages a {
+    color: #000000;
+    padding: 0 10px;
+}
+
+
+#pagePrecedente img, #pageSuivante img {
+    margin-top: 3px;
+}
+
+.item{
+	width:32px;
+	height:40px;
+	display:block;
+	margin-left:10px;
+	float:left;
+	position:relative;
+	z-index:100; /* mettre l'item au dessus de la question du centre */
+	text-indent: -9999px;
+}
+
+.item_hidden {
+	display:none;
+}
+
+.item-plus{
+	background:url('../images/mosaic/thumb_plus.png') no-repeat;
+}
+.item-plus:hover{
+	background:url('../images/mosaic/thumb_plus_orange.png') no-repeat;
+}
+
+.item-plus-visited{
+	background:url('../images/mosaic/thumb_plus_gray.png') no-repeat;
+}
+.item-plus-visited:hover{
+	background:url('../images/mosaic/thumb_plus_orange.png') no-repeat;
+}
+
+.item-minus{
+	background:url('../images/mosaic/thumb_minus.png') no-repeat;
+}
+.item-minus:hover{
+	background:url('../images/mosaic/thumb_minus_orange.png') no-repeat;
+}
+
+.item-minus-visited{
+	background:url('../images/mosaic/thumb_minus_gray.png') no-repeat;
+}
+.item-minus-visited:hover{
+	background:url('../images/mosaic/thumb_minus_orange.png') no-repeat;
+}
+
+/* Benoit : nouveaux temoignages */
+.item-plus-new{
+	background:url('../images/mosaic/thumb_plus_yellow.png') no-repeat;
+}
+.item-minus-new{
+	background:url('../images/mosaic/thumb_minus_yellow.png') no-repeat;
+}

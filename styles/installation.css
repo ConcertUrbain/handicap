@@ -1,0 +1,177 @@
+
+#installation-frame-border {
+    background-color: #c82f83;
+    border-radius: 50px;
+    margin-top: 62px;
+    padding: 5px;
+}
+
+#installation-frame {
+    background-color: #fff;
+    border-radius: 50px;
+    color: #000000;
+    font-family: Arial;
+    font-size: 1.4em;
+    line-height: 1.5em;
+    height: 450px;
+    padding: 80px 20px 0px;
+    text-align: left;
+    position:relative;
+    font-weight: bold;
+}
+
+#pageNextlink {
+    bottom: 20px;
+    display: block;
+    position: absolute;
+    right: 30px;
+}
+
+
+
+
+#installation-frame.page0 {
+    background-image: url("/images/installation/Installation_01_imageordi_1.png");
+    background-position: 20px bottom;
+    background-repeat: no-repeat;
+}
+#installation-frame.page0 .inner {
+    margin-left: 480px;
+    margin-right: 60px;
+}
+
+#installation-frame.page1 {
+    background-image: url("/images/installation/installation_02_ecran_Navigateurs_1.png");
+    background-position: 20px center;
+    background-repeat: no-repeat;
+}
+#installation-frame.page1 .inner {
+    margin-left: 480px;
+    margin-right: 60px;
+}
+
+#installation-frame.page2 {
+    background-image: url("/images/installation/Installation_03_ecran_son_1.png");
+    background-position: 40px center;
+    background-repeat: no-repeat;
+}
+#installation-frame.page2 .inner {
+    margin-left: 480px;
+    margin-right: 60px;
+}
+
+#installation-frame.page3 {
+    background-image: url("/images/installation/Installation_04_ecran_1.png");
+    background-position: center 50px;
+    background-repeat: no-repeat;
+}
+#installation-frame.page3 .inner {
+    margin-left: 60px;
+    margin-right: 60px;
+	margin-top: 150px;
+}
+
+#installation-frame.page4 {
+    background-image: url("/images/installation/Installation_05_ecouteurs_1.png");
+    background-position: 60px 80px;
+    background-repeat: no-repeat;
+}
+#installation-frame.page4 .inner {
+    margin-left: 460px;
+    margin-right: 60px;
+}
+
+#installation-frame.page5 {
+    background-image: url("/images/installation/Installation_06_branchement_1.png");
+    background-position: 60px center;
+    background-repeat: no-repeat;
+}
+#installation-frame.page5 .inner {
+    margin-left: 480px;
+    margin-right: 60px;
+}
+
+#installation-frame.page6 {
+    background-image: url("/images/installation/Installation_07_enregistrer_1.png");
+    background-position: 40px center;
+    background-repeat: no-repeat;
+}
+#installation-frame.page6 .inner {
+    margin-left: 550px;
+    margin-right: 60px;
+}
+
+#installation-frame.page7 .inner {
+    margin-left: 280px;
+    margin-right: 150px;
+}
+#installation-frame.page7 .inner .left {
+    color: #511c82;
+    font-size: 0.7em;
+    left: 150px;
+    line-height: 1.2em;
+    position: absolute;
+    top: 90px;
+    width: 130px;
+}
+#installation-frame.page7 .inner .left img {
+	margin-bottom: 15px;
+}
+
+#installation-frame.page8 .inner {
+    margin-left: 150px;
+    margin-right: 150px;
+}
+
+#installation-frame.page9 {
+    background-image: url("/images/installation/Installation_10_1_dessin.png");
+    background-position: 20px center;
+    background-repeat: no-repeat;
+}
+#installation-frame.page9 .inner {
+    margin-left: 480px;
+    margin-right: 60px;
+}
+
+
+
+
+#items_navigation_pagination {
+	width:100%;
+	text-align:center;
+	margin:0px auto;
+	float:left;
+}
+
+#items_navigation_pagination .nopage {
+	font-size:32px;
+	line-height:24px;
+	color: #000000;
+}
+
+#items_navigation_precedent_suite #legende, #items_navigation_precedent_suite #nopages {
+	height: 30px;
+	display: inline-block;
+	vertical-align: top;
+	padding-top: 10px;
+}
+
+#items_navigation_precedent_suite #nopages .nopage_actif a {
+	/*color:#ffffff;*/
+	font-weight: bold;
+	border:7px solid #c93083;
+	border-radius: 4px;
+	padding: 0 25px;
+}
+#items_navigation_precedent_suite #nopages {
+    background-color: #ffffff;
+}
+#items_navigation_precedent_suite #nopages a {
+    color: #000000;
+    padding: 0 10px;
+}
+
+
+#pagePrecedente img, #pageSuivante img {
+    margin-top: 3px;
+}

@@ -1,0 +1,98 @@
+#all-question{
+	width:800px;
+}
+
+.mejs-container {
+	margin: 0 auto;
+}
+
+#mosaic-question{
+	height:700px;
+}
+
+#info-frame-border{
+	-moz-border-radius: 50px;
+	border-radius: 50px;
+	background-color:#c12083;
+	padding:5px;
+	margin-top:62px;
+}
+
+#info-frame-top{
+	text-align:center;
+	font-size:2em;
+	color:#fff;
+	padding:20px 0px;
+}
+
+#info-frame-content{
+	text-align:center;
+}
+
+#info-media-frame{
+	-moz-border-radius: 50px;
+	border-radius: 50px;
+	background-color:#FFF;
+	
+/*	color:#511c82;*/
+	color:#000;
+	
+	padding:20px 50px;
+	margin:auto;
+	
+	font-weight:bold;
+}
+
+#info-media-title{
+	text-align:left;
+	font-size:1.4em;
+	width:600px;
+	margin:auto;
+	
+	padding:20px 0px;
+}
+
+#info-media-author{
+	text-align:justify;
+	
+	font-size:1.1em;
+	width:600px;
+	margin:auto;
+	
+	padding:10px 0px;
+	font-weight:normal;
+}
+
+#info-media-content{
+	font-size:1.5em;
+}
+
+#info-media-player-info{
+	padding-top:100px;
+	text-align:center;
+	font-size:3em;
+	color:#000;
+}
+
+#info-pdf{
+	margin:auto;
+	width:600px;
+	padding:15px 0px;
+}
+#info-pdf-icon{
+	color:#FFF;
+	display:block;
+	float:left;
+	
+	padding-right:10px;
+}
+#info-pdf-comment{
+	color:#FFF;
+	font-size:1.4em;
+	float:left;
+	width:500px;
+}
+
+#playerLite{
+	margin:auto;
+}

@@ -1,0 +1,79 @@
+#all-global{
+	/*background-color:#f00;*/
+	width:810px;
+}
+
+.partners-link{
+	display:block;
+	margin-right:8px;
+	margin-bottom:8px;
+	
+	float:left;
+}
+
+.partners-col-left{
+	float:left;
+	width:208px;
+}
+
+.partners-col-right{
+	float:left;
+	width:600px;
+}
+
+.partners-box{
+	float:left;
+	width:200px;
+	background-color:#ff0000
+}
+
+#europe{
+	background:url('../images/partners/flag_europe.png') no-repeat;
+	width:200px;
+	height:134px;
+}
+
+#valmarne{
+	background:url('../images/partners/logo_valmarne.png') no-repeat;
+	width:200px;
+	height:113px;
+}
+
+#etai{
+	background:url('../images/partners/logo_etai.png') no-repeat;
+	width:122px;
+	height:95px;
+}
+
+#afaser{
+	background:url('../images/partners/logo_afaser.png') no-repeat;
+	width:125px;
+	height:95px;
+}
+
+#concert{
+	background:url('../images/partners/logo_concert.png') no-repeat;
+	width:200px;
+	height:44px;
+}
+
+#jardins{
+	background:url('../images/partners/logo_jardins.png') no-repeat;
+	width:200px;
+	height:40px;
+}
+
+#idf{
+	background:url('../images/partners/logo_idf.png') no-repeat;
+	width:200px;
+	height:58px;
+}
+
+.partners-text{
+	background-color:#fff;
+	color:#000;
+	font-size:1em;
+	font-weight:bold;
+	padding:15px;
+	margin-bottom:8px;
+}

@@ -1,0 +1,346 @@
+
+
+#pres-frame-border{
+	-moz-border-radius: 50px;
+	border-radius: 50px;
+	background-color:#c82f83;
+	padding:5px;
+	margin-top:62px;
+}
+
+#pres-frame{
+	-moz-border-radius: 50px;
+	border-radius: 50px;
+	background-color:#fff;
+	
+/*	color:#511c82;*/
+	color:#000;
+	
+	font-family:Arial;
+	font-size:1.2em;
+	text-align:center;
+	
+	padding:80px 20px 50px 50px;
+	
+	height:400px;
+}
+
+.pres-container{
+	font-size:1.1em;
+}
+
+#pres-intro{
+}
+#pres-intro-text{
+  text-align:left;
+}
+
+#pres-tutorial-video{
+	padding-top:70px;
+}
+
+#pres-tutorial-video-titre{
+	padding-top:20px;
+	padding-bottom:115px;
+}
+
+#pres-video {
+	display:none;
+}
+
+#pres-video-container{
+	margin:auto;
+	width:590px;
+	display:none;
+}
+
+#pres-tuto-container{
+	margin:auto;
+	width:400px;
+}
+
+#pres-video-description{
+	padding-top:8px;
+	font-size:0.8em;
+}
+
+#pres-title{
+	padding:20px 0px;
+	font-size:1.3em;
+	color:#c82f83;
+	text-decoration:underline;
+}
+
+/* Nouvel écran Questions */
+
+#pres-questions {
+	width:790px;
+	height:450px;
+	padding-top:-20px;
+	position:relative;
+	margin-top: -15px;
+	margin-left: -5px;
+}
+
+#pres-questions {
+	background:url("../images/presentation/bg_pointille.png");
+	background-repeat: no-repeat;
+	background-position: center top;
+}
+
+.pres-question-new {
+	text-align:left;
+	margin:15px 22px 60px 22px;
+	width:350px;
+	float:left;
+}
+
+.pres-question-78, .pres-question-79 {
+	padding-top:20px;
+}
+
+.pres-question-77 {
+	padding-left:0px;
+}
+
+#pres-question-video {
+	background:url("../images/presentation/icone-video-questions.png");
+	background-repeat:no-repeat;
+	width:138px;
+	height:138px;
+	position:absolute;
+	left: 326px;
+	top: 149px;
+}
+
+#pres-question-video-rollover {
+	/* SMALL VERSION
+	background:url("../images/presentation/icone-video-questions-rollover.png");
+	background-repeat:no-repeat;
+	width:140px;
+	height:140px;
+	position:absolute;
+	left: 344px;
+	top: 131px;	
+	cursor:pointer;
+	display:none;
+	*/
+}
+
+#pres-question-video-rollover {
+	/* LARGE VERSION*/
+	background:url("../images/presentation/icone-video-questions-rollover-large.png");
+	background-repeat:no-repeat;
+	width:300px;
+	height:300px;
+	position:absolute;
+	left: 247px;
+	top: 69px;	
+	/*cursor:pointer;*/
+	display:none;
+	text-indent: -9999px
+}
+
+.pres-question-new-icon {
+	width:350px;	
+	text-align:center;
+}
+
+.pres-question-new-label{
+	font-size:0.9em;
+	font-weight:bold;
+	margin-top:5px;
+	padding-left:15px;
+	width:350px;	
+	text-align:center;
+}
+
+
+.pres-debat-rollover {
+	display:none;
+	padding-left: 65px;
+	padding-top: 30px;
+	width: 100px;
+}
+
+.pres-question-rollover-new {
+	display:none;
+	position:absolute;
+	z-index:30;
+}
+
+.pres-question-rollover-new img {
+}
+
+#pres-question-rollover-76 {
+	left:75px;
+	top:-65px;
+}
+
+#pres-question-rollover-77 {
+	left:470px;
+	top:-65px;
+}
+
+#pres-question-rollover-78 {
+	left:75px;
+	top:165px;
+}
+
+#pres-question-rollover-79 {
+	left:470px;
+	top:165px;
+}
+
+
+
+/* Ancien écran Questions */
+
+#pres-questions{
+	
+}
+
+#pres-questions a{
+/*	color:#511c82;*/
+	color:#000;
+}
+
+#pres-mail{
+  text-align:center;
+  margin:20px auto 0px auto;
+  width:500px;
+}
+
+.pres-question{
+	text-align:left;
+	background-color:#fff;
+	margin:15px 27px 0px 17px;
+}
+
+.pres-question:hover{
+	background-color:#ffcbcb;
+	/*cursor:pointer;*/
+}
+
+.pres-question-icon{
+	padding:15px 0px 0px 0px;
+	float:left;
+}
+
+.pres-question-label-container{
+	float:left;
+}
+
+.pres-question-label{
+	font-size:1.1em;
+	font-weight:bold;
+	line-height:55px;
+	
+	margin-top:12px;
+	padding-left:15px;
+	/*background-color:#f00;*/
+}
+
+.pres-question-click{
+	color:#e69303;
+	font-size:0.8em;
+	line-height:30px;
+	
+	padding-left:15px;
+	/*background-color:#00f;*/
+}
+
+.pres-question-illus{
+  width:120px;
+  height:80px;
+  float:right;
+}
+
+.pres-question-description{
+	width:220px;
+	float:left;
+	padding-left:15px;
+	font-size:0.8em;
+	line-height:80px;
+	
+	/*background-color:#0f0;*/
+}
+
+#valmarne-logo{
+	background:url("../images/valdemarne_logo.png");
+	width:146px;
+	height:83px;
+	margin:auto;
+}
+
+#pres-pdfs{
+  font-size:0.8em;
+  text-align:center;
+  height: 80px;
+  width: 500px;
+  padding-left: 110px;
+  padding-top: 15px;
+}
+
+#pres-contact {
+  font-size:0.8em;
+  text-align:center;
+  width: 850px;
+  margin-top:20px;
+}
+
+.calendar-link {
+	background:url("../images/presentation/icone-calendrier.png");
+	background-repeat:no-repeat;
+	display:block;
+	width:70px;
+	color:#e86a10;
+	float: right;
+	padding-left: 62px;
+	padding-top: 41px;
+}
+
+.calendar-link hover {
+	background:url("../images/presentation/icone-calendrier-rollover.png");
+}
+
+
+.pres-pdf-link{
+  padding:10px 20px 0px 20px;
+  font-size:1em;
+  color:#e86a10;
+  float: left;
+}
+
+.pres-mail-link{
+  font-size:1em;
+  color:#e86a10;
+}
+
+
+#restitution-blank{
+	margin-top:50px;
+}
+
+#restitution{
+	font-size:1.5em;
+	padding:0px 30px;
+}
+
+#restitution-pdf-link{
+	margin:auto;
+	width:70px;
+	font-size:1em;
+}
+
+#restitution-partners-title{
+	margin-top:30px;
+	text-align:center;
+	font-size:1.5em;
+}
+
+#restitution-partners{
+	margin:auto;
+	margin-top:15px;
+	width:680px;
+}

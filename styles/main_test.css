@@ -1,0 +1,430 @@
+@import "reset.css";
+
+/*
+	fe7703
+	511c82 dark purple
+*/
+
+body{
+	color:#fff;
+
+	background-color:#57007c;
+	text-align:center;
+	margin:0px auto;
+	padding:auto;
+	font-size:16px;
+  
+	font-family:Arial;
+}
+
+img{
+  padding:0px;
+  margin:0px;
+}
+
+a{
+	text-decoration:none;
+	border-width:none;
+}
+
+a:hover{
+	color:#F00;
+}
+
+.all{
+  margin:0px auto 10px auto;
+}
+
+#all-index{
+	width:900px;
+}
+
+#all-global{
+	width:880px;
+	padding-top: 62px;
+}
+
+#all-temoin{
+	width:700px;
+}
+
+#buttons{
+	float:left;
+}
+
+.btn{
+	float:right;
+	text-align:center;
+	font-size:0.8em;
+	margin-right:-70px;
+	color:#fff;
+}
+
+.btn a{
+	color:#fff;
+}
+.btn a:hover{
+	color:#f00;
+}
+
+#btn-close{
+  z-index:10;
+  margin-top:20px;
+}
+#btn-close-pres{
+  margin-top:100px;
+}
+
+#btn-next, #btn-next-action{
+	margin-top:230px;
+}
+
+#footer{
+	margin-top:-12px;
+	margin-left:45px;
+	color:#fff;
+	font-weight:bold;
+	font-size:1.2em;
+}
+
+#footer a{
+	color:#fff;
+}
+
+#footer a:hover{
+	color:#f00;
+}
+
+.footer_link{
+	padding-right:50px;
+}
+
+.clear{
+	clear:both;
+}
+
+.bold{
+	font-weight:bold;
+}
+
+.float{
+	float:left;
+}
+
+#bubble-thanks-frame{
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+	
+	background-color:#ff7602;
+	padding:5px;
+	
+	margin: 300px auto 0px auto;
+	text-align:center;
+	width:400px;
+}
+
+#bubble-thanks{
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+	
+	background-color:#fff;
+	height:100px;
+	line-height:100px;
+	color:#ff7602;
+	font-size:2.2em;
+	font-weight:bold;
+}
+
+#loading-border{
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+	
+	background-color:#fe7703;
+	
+	position:absolute;
+	padding:5px;
+}
+
+#loading{
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+	
+	padding:30px 20px;
+	font-size:2em;
+	background-color:#fff;
+	color:#502783;
+}
+
+#valmarne-logo-question{
+	width:130px;
+	height:74px;
+	
+	background:url("../images/valdemarne_logo_150.png");
+	background-size:100% 100%;
+	
+	margin:auto;
+	
+}
+
+#ipad-layer{
+	position:absolute;
+	top:0px;
+	width:100%;
+	z-index:-10;
+}
+
+
+#ipad-cover{
+	margin:auto;
+	width:1024px;
+	height:640px;
+	
+	opacity:0.3;
+	filter:alpha(opacity=30); /* For IE8 and earlier */
+	
+	background-color:#600;
+}
+
+#loading-layer{
+	position:absolute;
+	top:200px;
+	width:100%;
+	text-align:center;
+}
+
+
+/* Relatif au menu en haut de page */
+
+#top-menu{
+	padding-left:50px;
+}
+
+#pres-logo{
+	background:url("../images/logo_header.png") no-repeat;
+	z-index:1;
+	position:absolute;
+  text-align:left;
+  margin:0px 0px 0px -438px;
+	width:263px;
+	height:140px;
+}
+
+#menu{
+	margin-left:100px;
+	color:#fff;
+}
+
+#menu a{
+	color:#fff;
+}
+
+#menu{
+  padding-left:260px;
+  z-index:25;
+  width:510px;
+  height:107px;
+  position:absolute;
+  top:10px;
+}
+
+
+#menu #debat {
+	background:url("../images/presentation/icons/debat-eteint.png") no-repeat;
+	width:106px;
+	height:107px;
+	margin-right:25px;
+}
+
+#menu #debat:hover{
+	background:url("../images/presentation/icons/debat-allume.png") no-repeat;
+	width:106px;
+	height:107px;
+	margin-right:25px;
+}
+
+#menu #debat.selected{
+	background:url("../images/presentation/icons/debat-allume.png") no-repeat;
+	width:106px;
+	height:107px;
+	margin-right:25px;
+}
+
+#menu #video {
+	background:url("../images/presentation/icons/video_eteint.png") no-repeat;
+	margin-top:7px;
+}
+
+#menu #video:hover{
+	background:url("../images/presentation/icons/video_active.png") no-repeat;
+	margin-top:7px;
+}
+
+#menu #video.selected{
+	background:url("../images/presentation/icons/video_active.png") no-repeat;
+	margin-top:7px;
+}
+
+#menu #calendar {
+	margin-top:6px;
+}
+
+#menu #intro {
+	background:url("../images/presentation/icons/intro-aide-gris.png") no-repeat;
+	background-position:0 20px;
+	margin-top:6px;
+	float: right;
+}
+
+#menu #intro:hover{
+	background:url("../images/presentation/icons/intro-aide-blanc.png") no-repeat;
+	background-position:0 20px;
+	margin-top:6px;
+}
+
+#menu #intro.selected{
+	background:url("../images/presentation/icons/intro-aide-blanc.png") no-repeat;
+	background-position:0 20px;
+	margin-top:6px;
+}
+
+#menu #debat img {
+	opacity:0;
+}
+
+#menu #video img {
+	opacity:0;
+}
+
+#menu #intro img {
+	opacity:0;
+}
+
+#menu-record {
+	margin-left:40px;
+	color:#fff;
+}
+
+#menu-record a{
+	color:#fff;
+}
+
+#menu-record {
+  z-index:25;
+  width:710px;
+  height:120px;
+  position:absolute;
+  top:10px;
+}
+
+#menu-record .question-number-container {
+	
+  background:url("../images/mosaic/mosaique-icone-blanche.png") no-repeat;
+  background-size:117px 117px;
+  background-position:10px 5px;
+  width:117px;
+  height:117px;
+  display:inline-block;
+  
+  color:#000;
+  font-weight:bold;
+	
+  text-align:center;
+  margin-left:15px;
+	
+  padding:25px 5px 0px 10px;
+  float:left;
+}
+
+
+
+
+/*
+.menu-presentation{
+  background:url("../images/home/question_mark.png") top left no-repeat;
+  display:block;
+  width:251px;
+  height:62px;
+  margin-left:-50px;
+  margin-right:50px;
+  float:left;
+}
+.menu-presentation:hover{
+  background:url("../images/home/question_mark.png") top right no-repeat;
+}
+*/
+
+/* QUESTIONS ICONS TOP MOSAIC */
+
+.question-number-container.icone-menu-mosaic {
+}
+
+.question-number-container{
+  -moz-border-radius: 10px 10px 0px 0px;
+	border-radius: 10px 10px 0px 0px;
+	
+  display:inline-block;
+  background:#777;
+  
+  color:#000;
+  font-weight:bold;
+	
+  text-align:center;
+	margin-left:15px;
+	
+	padding:5px 5px;
+  float:left;
+}
+
+.question-number-container:hover{
+	background-color:#FFF;
+}
+
+.selected{
+	background-color:#FFF;
+	padding:5px 5px;
+}
+
+.question-number{
+  background-repeat:no-repeat;
+}
+
+/* cadre qui contient le titre du témoignage */
+.question-top-title{
+	font-size:1.5em;
+	color:#FFF;
+	
+	width:450px;
+	line-height:35px;
+	text-align:left;
+  
+  margin-left:30px;
+	padding-top:15px;
+  
+	float:left;
+}
+
+/* note: frame partagé par plusieurs pages */
+
+#media-frame-border{
+	-moz-border-radius: 50px;
+	border-radius: 50px;
+	background-color:#f67522;
+	padding:5px;
+}
+
+.media-frame-border-popup {
+	margin-top: 76px;
+}
+
+#media-frame{
+	-moz-border-radius: 50px;
+	border-radius: 50px;
+	background-color:#fff;
+	
+	color:#511c82;
+	
+	font-weight:bold;
+	text-align:left;
+	
+	padding:15px;
+}

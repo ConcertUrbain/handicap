@@ -1,0 +1,28 @@
+@import "aide.css";
+
+#all-aide{
+	width:1280px;
+	max-width:100%;
+	margin:auto;
+}
+
+
+#all-aide #menu {
+    display: inline-block;
+    float: none;
+    margin: auto;
+    width: auto;
+}
+
+.aide-frame {
+	margin-top:110px;
+	/*height:500px;*/
+	margin-top: 10px;
+}
+
+
+.aide-frame video {
+    height: auto;
+    max-width: 100%;
+    width: 1280px;
+}
