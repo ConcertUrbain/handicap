@@ -1,0 +1,518 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Chatanoo Handicap Front
+
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      - Label:
+          default: General Configuration
+        Parameters: ["ProjectName", "ChatanooStack", "MultiAZ", "UseSecureConnection", "DeploymentBucket", "DeploymentZipKey"]
+      - Label:
+          default: DNS Configuration
+        Parameters: ["SubDomainName", "Route53HostedZone"]
+      - Label:
+          default: Already exists ApiKey
+        Parameters: ["ApiKey", "User", "Password"]
+      - Label:
+          default: Instance Configuration
+        Parameters: ["InstanceType", "EC2KeyName"]
+
+Parameters:
+  ProjectName:
+    Type: String
+  ChatanooStack:
+    Type: String
+  MultiAZ:
+    Type: String
+    AllowedValues: ["true", "false"]
+    Default: false
+  UseSecureConnection:
+    Description: Use HTTPS to connect this website
+    Type: String
+    AllowedValues: ["true", "false"]
+    Default: "false"
+  DeploymentBucket:
+    Description: Chatanoo Deployment Bucket
+    Type: String
+    Default: chatanoo-deployment
+  DeploymentZipKey:
+    Description: Url of Chatanoo Administration Tool deployment zip
+    Type: String
+    Default: front/handicap/1.1.0.zip
+
+  InstanceType:
+    Type: String
+    Default: t2.micro
+    AllowedValues:
+      - t2.nano
+      - t2.micro
+      - t2.small
+      - t2.medium
+      - t2.large
+      - m4.large
+      - m4.xlarge
+      - m4.2xlarge
+      - m4.4xlarge
+      - m4.10xlarge
+      - m4.16xlarge
+      - m3.medium
+      - m3.large
+      - m3.xlarge
+      - m3.2xlarge
+      - c4.large
+      - c4.xlarge
+      - c4.2xlarge
+      - c4.4xlarge
+      - c4.8xlarge
+      - c3.large
+      - c3.xlarge
+      - c3.2xlarge
+      - c3.4xlarge
+      - c3.8xlarge
+      - g2.2xlarge
+      - g2.8xlarge
+      - p2.xlarge
+      - p2.8xlarge
+      - p2.16xlarge
+      - r3.large
+      - r3.xlarge
+      - r3.2xlarge
+      - r3.4xlarge
+      - r3.8xlarge
+      - x1.16xlarge
+      - x1.32xlarge
+      - d2.xlarge
+      - d2.2xlarge
+      - d2.4xlarge
+      - d2.8xlarge
+      - i2.xlarge
+      - i2.2xlarge
+      - i2.4xlarge
+      - i2.8xlarge
+  EC2KeyName:
+    Description: EC2 KeyName
+    Type: AWS::EC2::KeyPair::KeyName
+
+  ApiKey:
+    Description: Your existing ApiKey in Chatanoo
+    Type: String
+  User:
+    Description: Your existing User in Chatanoo
+    Type: String
+  Password:
+    Description: Your existing Password for your User in Chatanoo
+    Type: String
+
+  SubDomainName:
+    Description: Subdomain Name of the website
+    Type: String
+  Route53HostedZone:
+    Description: AWS Route53 HostedZone ID of the domain
+    Type: String
+
+Conditions:
+  CreateApiKey: !Equals [!Ref ApiKey, ""]
+  UseDNSRecord: !Not [!Equals [!Ref Route53HostedZone, ""]]
+  UseMultiAZ: !Equals [!Ref MultiAZ, "true"]
+  UseHTTPS: !Equals [!Ref UseSecureConnection, "true"]
+  UseDNSAndHTTPS: !And
+    - !Condition UseDNSRecord
+    - !Condition UseHTTPS
+
+Resources:
+
+  DomainName:
+    Type: Custom::Route53HostedZoneDetails
+    Version: '1.0'
+    Condition: UseDNSRecord
+    Properties:
+      ServiceToken: !Join [':', ['arn:aws:lambda', !Ref 'AWS::Region', !Ref 'AWS::AccountId', "function", !ImportValue { "Fn::Sub": "${ChatanooStack}-Route53HostedZoneDetails" }]]
+      Id: !Ref Route53HostedZone
+
+  EBInstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: "/"
+      Policies:
+        - PolicyName: root
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Sid: BucketAccess
+                Effect: Allow
+                Action:
+                  - s3:Get*
+                  - s3:List*
+                  - s3:PutObject
+                Resource:
+                  - arn:aws:s3:::elasticbeanstalk-*
+                  - arn:aws:s3:::elasticbeanstalk-*/*
+
+  EBEC2InstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Path: "/"
+      Roles:
+        - !Ref EBInstanceRole
+
+  EBRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - elasticbeanstalk.amazonaws.com
+            Action:
+              - sts:AssumeRole
+            Condition:
+              StringEquals:
+                sts:ExternalId: elasticbeanstalk
+      Path: "/"
+      Policies:
+        - PolicyName: root
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Sid: HealthReporting
+                Effect: Allow
+                Action:
+                  - elasticloadbalancing:DescribeInstanceHealth
+                  - ec2:DescribeInstances
+                  - ec2:DescribeInstanceStatus
+                  - ec2:GetConsoleOutput
+                  - ec2:AssociateAddress
+                  - ec2:DescribeAddresses
+                  - ec2:DescribeSecurityGroups
+                  - sqs:GetQueueAttributes
+                  - sqs:GetQueueUrl
+                  - autoscaling:DescribeAutoScalingGroups
+                  - autoscaling:DescribeAutoScalingInstances
+                  - autoscaling:DescribeScalingActivities
+                  - autoscaling:DescribeNotificationConfigurations
+                Resource:
+                  - '*'
+              - Sid: AllowOperations
+                Effect: Allow
+                Action:
+                  - autoscaling:AttachInstances
+                  - autoscaling:CreateAutoScalingGroup
+                  - autoscaling:CreateLaunchConfiguration
+                  - autoscaling:DeleteLaunchConfiguration
+                  - autoscaling:DeleteAutoScalingGroup
+                  - autoscaling:DeleteScheduledAction
+                  - autoscaling:DescribeAccountLimits
+                  - autoscaling:DescribeAutoScalingGroups
+                  - autoscaling:DescribeAutoScalingInstances
+                  - autoscaling:DescribeLaunchConfigurations
+                  - autoscaling:DescribeLoadBalancers
+                  - autoscaling:DescribeNotificationConfigurations
+                  - autoscaling:DescribeScalingActivities
+                  - autoscaling:DescribeScheduledActions
+                  - autoscaling:DetachInstances
+                  - autoscaling:PutScheduledUpdateGroupAction
+                  - autoscaling:ResumeProcesses
+                  - autoscaling:SetDesiredCapacity
+                  - autoscaling:SuspendProcesses
+                  - autoscaling:TerminateInstanceInAutoScalingGroup
+                  - autoscaling:UpdateAutoScalingGroup
+                  - cloudwatch:PutMetricAlarm
+                  - ec2:AuthorizeSecurityGroupEgress
+                  - ec2:AuthorizeSecurityGroupIngress
+                  - ec2:CreateSecurityGroup
+                  - ec2:DeleteSecurityGroup
+                  - ec2:DescribeAccountAttributes
+                  - ec2:DescribeImages
+                  - ec2:DescribeInstances
+                  - ec2:DescribeKeyPairs
+                  - ec2:DescribeSecurityGroups
+                  - ec2:DescribeSubnets
+                  - ec2:DescribeVpcs
+                  - ec2:RevokeSecurityGroupEgress
+                  - ec2:RevokeSecurityGroupIngress
+                  - ec2:TerminateInstances
+                  - ecs:CreateCluster
+                  - ecs:DeleteCluster
+                  - ecs:DescribeClusters
+                  - ecs:RegisterTaskDefinition
+                  - elasticbeanstalk:*
+                  - elasticloadbalancing:ApplySecurityGroupsToLoadBalancer
+                  - elasticloadbalancing:ConfigureHealthCheck
+                  - elasticloadbalancing:CreateLoadBalancer
+                  - elasticloadbalancing:DeleteLoadBalancer
+                  - elasticloadbalancing:DeregisterInstancesFromLoadBalancer
+                  - elasticloadbalancing:DescribeInstanceHealth
+                  - elasticloadbalancing:DescribeLoadBalancers
+                  - elasticloadbalancing:DescribeTargetHealth
+                  - elasticloadbalancing:RegisterInstancesWithLoadBalancer
+                  - iam:ListRoles
+                  - iam:PassRole
+                  - logs:CreateLogGroup
+                  - logs:PutRetentionPolicy
+                  - rds:DescribeDBInstances
+                  - rds:DescribeOrderableDBInstanceOptions
+                  - s3:CopyObject
+                  - s3:GetObject
+                  - s3:GetObjectAcl
+                  - s3:GetObjectMetadata
+                  - s3:ListBucket
+                  - s3:listBuckets
+                  - s3:ListObjects
+                  - sns:CreateTopic
+                  - sns:GetTopicAttributes
+                  - sns:ListSubscriptionsByTopic
+                  - sns:Subscribe
+                  - sqs:GetQueueAttributes
+                  - sqs:GetQueueUrl
+                Resource:
+                  - "*"
+              - Sid: AllowS3OperationsOnElasticBeanstalkBuckets
+                Effect: Allow
+                Action:
+                  - s3:*
+                Resource:
+                  - arn:aws:s3:::elasticbeanstalk-*
+                  - arn:aws:s3:::elasticbeanstalk-*/*
+              - Sid: AllowCloudformationOperationsOnElasticBeanstalkStacks
+                Effect: Allow
+                Action:
+                  - cloudformation:*
+                Resource:
+                  - arn:aws:cloudformation:*:*:stack/awseb-*
+                  - arn:aws:cloudformation:*:*:stack/eb-*
+
+  Application:
+    Type: AWS::ElasticBeanstalk::Application
+    Properties:
+      Description: !Ref ProjectName
+
+  ApplicationVersion:
+    Type: AWS::ElasticBeanstalk::ApplicationVersion
+    Properties:
+      ApplicationName: !Ref Application
+      Description: !Sub "${ProjectName} Application Version"
+      SourceBundle:
+        S3Bucket: !Ref DeploymentBucket
+        S3Key: !Ref DeploymentZipKey
+
+  ConfigurationTemplate:
+    Type: AWS::ElasticBeanstalk::ConfigurationTemplate
+    Properties:
+      ApplicationName: !Ref Application
+      Description: !Sub "${ProjectName} Configuration Template"
+      SolutionStackName: 64bit Amazon Linux 2016.03 v2.1.6 running PHP 5.6
+      OptionSettings:
+        - Namespace: aws:elasticbeanstalk:environment
+          OptionName: EnvironmentType
+          Value: !If [UseMultiAZ, LoadBalanced, SingleInstance]
+        - Namespace: aws:elasticbeanstalk:environment
+          OptionName: ServiceRole
+          Value: !Ref EBRole
+        - Namespace: aws:autoscaling:asg
+          OptionName: MinSize
+          Value: !If [UseMultiAZ, '2', '1']
+        - Namespace: aws:autoscaling:asg
+          OptionName: MaxSize
+          Value: !If [UseMultiAZ, '8', '4']
+
+        - Namespace: aws:autoscaling:launchconfiguration
+          OptionName: EC2KeyName
+          Value: !Ref EC2KeyName
+        - Namespace: aws:autoscaling:launchconfiguration
+          OptionName: InstanceType
+          Value: !Ref InstanceType
+        - Namespace: aws:autoscaling:launchconfiguration
+          OptionName: IamInstanceProfile
+          Value: !GetAtt EBEC2InstanceProfile.Arn
+        - Namespace: aws:elasticbeanstalk:healthreporting:system
+          OptionName: SystemType
+          Value: enhanced
+        - Namespace: aws:elasticbeanstalk:healthreporting:system
+          OptionName: ConfigDocument
+          Value: |
+            {
+              "CloudWatchMetrics": {
+                "Environment": {
+                  "InstancesSevere": 60,
+                  "ApplicationLatencyP90": 60,
+                  "ApplicationLatencyP99": 60,
+                  "ApplicationLatencyP95": 60,
+                  "InstancesUnknown": 60,
+                  "ApplicationLatencyP85": 60,
+                  "InstancesInfo": 60,
+                  "ApplicationRequests2xx": 60,
+                  "InstancesDegraded": 60,
+                  "InstancesWarning": 60,
+                  "ApplicationLatencyP50": 60,
+                  "ApplicationRequestsTotal": 60,
+                  "InstancesNoData": 60,
+                  "InstancesPending": 60,
+                  "ApplicationLatencyP10": 60,
+                  "ApplicationRequests5xx": 60,
+                  "ApplicationLatencyP75": 60,
+                  "InstancesOk": 60,
+                  "ApplicationRequests3xx": 60,
+                  "ApplicationRequests4xx": 60
+              },
+              "Instance": {
+                  "ApplicationLatencyP90": 60,
+                  "ApplicationLatencyP99": 60,
+                  "ApplicationLatencyP95": 60,
+                  "ApplicationLatencyP85": 60,
+                  "CPUUser": 60,
+                  "ApplicationRequests2xx": 60,
+                  "CPUIdle": 60,
+                  "ApplicationLatencyP50": 60,
+                  "ApplicationRequestsTotal": 60,
+                  "RootFilesystemUtil": 60,
+                  "LoadAverage1min": 60,
+                  "CPUIrq": 60,
+                  "CPUNice": 60,
+                  "CPUIowait": 60,
+                  "ApplicationLatencyP10": 60,
+                  "LoadAverage5min": 60,
+                  "ApplicationRequests5xx": 60,
+                  "ApplicationLatencyP75": 60,
+                  "CPUSystem": 60,
+                  "ApplicationRequests3xx": 60,
+                  "ApplicationRequests4xx": 60,
+                  "InstanceHealth": 60,
+                  "CPUSoftirq": 60
+                }
+              },
+              "Version": 1
+            }
+
+        - !If
+          - UseMultiAZ
+          - !If
+            - UseDNSAndHTTPS
+            - Namespace: aws:elb:listener:443
+              OptionName: ListenerProtocol
+              Value: HTTPS
+            - Namespace: aws:elb:listener
+              OptionName: ListenerProtocol
+              Value: HTTP
+          - !Ref "AWS::NoValue"
+        - !If
+          - UseMultiAZ
+          - !If
+            - UseDNSAndHTTPS
+            - Namespace: aws:elb:listener:443
+              OptionName: SSLCertificateId
+              Value: !Ref Certificate
+            - !Ref 'AWS::NoValue'
+          - !Ref "AWS::NoValue"
+        - !If
+          - UseMultiAZ
+          - !If
+            - UseDNSAndHTTPS
+            - Namespace: aws:elb:listener:443
+              OptionName: InstancePort
+              Value: 80
+            - Namespace: aws:elb:listener
+              OptionName: InstancePort
+              Value: 80
+          - !Ref "AWS::NoValue"
+        - !If
+          - UseMultiAZ
+          - !If
+            - UseDNSAndHTTPS
+            - Namespace: aws:elb:listener:443
+              OptionName: InstanceProtocol
+              Value: HTTP
+            - Namespace: aws:elb:listener
+              OptionName: InstanceProtocol
+              Value: HTTP
+          - !Ref "AWS::NoValue"
+
+        - Namespace: aws:elasticbeanstalk:application:environment
+          OptionName: API_KEY
+          Value: !If [CreateApiKey, !Ref ChatanooApiKey, !Ref ApiKey]
+        - Namespace: aws:elasticbeanstalk:application:environment
+          OptionName: USER
+          Value: !If [CreateApiKey, !GetAtt ChatanooApiKey.User, !Ref User]
+        - Namespace: aws:elasticbeanstalk:application:environment
+          OptionName: PASS
+          Value: !If [CreateApiKey, !GetAtt ChatanooApiKey.Password, !Ref Password]
+        - Namespace: aws:elasticbeanstalk:application:environment
+          OptionName: SERVICE_URL
+          Value: !ImportValue { "Fn::Sub": "${ChatanooStack}-CoreUrl" }
+        - Namespace: aws:elasticbeanstalk:application:environment
+          OptionName: MEDIAS_CENTER_URL
+          Value: !ImportValue { "Fn::Sub": "${ChatanooStack}-MediasCenterUrl" }
+
+  Environment:
+    Type: AWS::ElasticBeanstalk::Environment
+    Properties:
+      ApplicationName: !Ref Application
+      Description: Chatanoo Core Environment
+      TemplateName: !Ref ConfigurationTemplate
+      VersionLabel: !Ref ApplicationVersion
+      Tags:
+        - Key: chatanoo:project
+          Value: !Ref ProjectName
+        - Key: chatanoo:component
+          Value: handicap
+
+  Certificate:
+    Type: "AWS::CertificateManager::Certificate"
+    Condition: UseDNSAndHTTPS
+    Properties:
+      DomainName: !Join ['.', [!Ref SubDomainName, !Ref DomainName]]
+      DomainValidationOptions:
+        - DomainName: !Ref DomainName
+          ValidationDomain: !Ref DomainName
+      SubjectAlternativeNames:
+        - !Ref DomainName
+      Tags:
+        - Resource Tag
+
+  DNSRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      Comment: !Sub "Public DNS Record for ${ProjectName}"
+      HostedZoneId: !If ["UseDNSRecord", !Ref Route53HostedZone, !Ref 'AWS::NoValue']
+      Name: !Join ["", [!Ref SubDomainName, ".", !Ref DomainName, "."]]
+      Type: CNAME
+      TTL: 300
+      ResourceRecords:
+        - !GetAtt Environment.EndpointURL
+    Condition: UseDNSRecord
+
+  ChatanooApiKey:
+    Type: Custom::ChatanooApiKey
+    Version: 1.0
+    Condition: CreateApiKey
+    Properties:
+      ServiceToken: !Join [":", ["arn:aws:lambda", !Ref 'AWS::Region', !Ref 'AWS::AccountId', "function", !ImportValue { "Fn::Sub": "${ChatanooStack}-ChatanooCreateApiKeyLambda" }]]
+      Environment:
+        Bucket: !ImportValue { "Fn::Sub": "${ChatanooStack}-ChatanooApiKeyEnvironmentBucket" }
+        Key: !ImportValue { "Fn::Sub": "${ChatanooStack}-ChatanooApiKeyEnvironmentKey" }
+      Site: !Ref ProjectName
+      Host: !If
+        - UseDNSRecord
+        - !Join ['', [!Ref SubDomainName, '.', !Ref DomainName]]
+        - !GetAtt Environment.EndpointURL
+
+Outputs:
+  User:
+    Value: !If [CreateApiKey, !GetAtt ChatanooApiKey.User, !Ref User]
+  Password:
+    Value: !If [CreateApiKey, !GetAtt ChatanooApiKey.Password, !Ref Password]
+  Url:
+    Value: !If
+      - UseDNSRecord
+      - !Join ['', [!If [UseHTTPS, 'https://', 'http://'], !Ref SubDomainName, '.', !Ref DomainName]]
+      - !Join ['', [!If [UseHTTPS, 'https://', 'http://'], !GetAtt Environment.EndpointURL]]

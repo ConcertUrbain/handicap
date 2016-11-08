@@ -1,12 +1,12 @@
 <?php
-	
+
   define("_USE_AUTOSTART_VIDEO", "1");
   define("_USE_AUTOSTART_SOUND", "1");
 
   define("USE_LOADCACHE", "0");
   define("USE_CACHE", "0");
 
-  define("MEDIA_PATH", "http://mc.chatanoo.org/m/");
+  define("MEDIA_PATH", $_ENV["MEDIAS_CENTER_URL"]);
   define("FORM_DATA", "formdata");
 
   define("DATA_CACHE", "cache");
@@ -18,10 +18,10 @@
 
   define("PRESENTATION_VIDEO", "MC-MWEkZkGV-V");
   define("TUTORIEL_VIDEO", "MC-SSrTChQK-V");
-  
+
 	$apiKeys = array(
-		"API_HANDICAP" => "a24j2sW2ueaadyy9462EQF3dc3BUZUje"
+		"API_HANDICAP" => $_ENV["API_KEY"]
 	);
-  
+
   define("COMMENT_SAME_PAGE", "1");
 ?>
