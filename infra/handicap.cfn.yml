@@ -451,7 +451,7 @@ Resources:
           Value: !ImportValue { "Fn::Sub": "${ChatanooStack}-CoreUrl" }
         - Namespace: aws:elasticbeanstalk:application:environment
           OptionName: MEDIAS_CENTER_URL
-          Value: !ImportValue { "Fn::Sub": "${ChatanooStack}-MediasCenterUrl" }
+          Value: !Join ["", [!ImportValue { "Fn::Sub": "${ChatanooStack}-MediasCenterUrl" }, "/m/"]]
 
   Environment:
     Type: AWS::ElasticBeanstalk::Environment
